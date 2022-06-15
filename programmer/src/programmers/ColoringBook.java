@@ -91,7 +91,7 @@ class Color {
     	//	면적의 넓이를 return한다
     	return count;
     }
-    void print() {
+    private void print() {
     	for(int i = 0 ; i < maxY; i++) {
     		for(int j = 0;  j < maxX; j++) {
     			if(!check[i][j])
