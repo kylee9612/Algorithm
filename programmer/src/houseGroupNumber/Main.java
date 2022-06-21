@@ -53,6 +53,7 @@ class HouseGrouping {
 				System.out.println(i);
 			br.close();
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
