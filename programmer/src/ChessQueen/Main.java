@@ -43,6 +43,13 @@ class Queen{
 		
 		return false;
 	}
+	private void makeInvalid(int x, int y) {
+		for(int i = 0 ; i < size; i++) {
+			map[y][i] = true;
+			map[i][x] = true;
+		}
+		
+	}
 }
 
 public class Main {
