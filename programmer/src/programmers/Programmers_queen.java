@@ -1,22 +1,29 @@
 package programmers;
 
 class Solutionsss {
+	private boolean board[][];
+	private boolean check[];
+	private int max;
+	private int x;
+	private int y;
+	
     public int solution(int n) {
+        board = new boolean[n][n];
+        check = new boolean[n];
+        max = n;
         int answer = 0;
-        
-        int temp = n;
-        String str = "";
-        while(temp > 0) {
-        	str = (temp%3) + str;
-        	temp/=3;
-        }
-        String st = "";
-        System.out.println(str);
-        for(int i = 0 ; i < str.length();i++)
-        	st+=str.charAt(str.length()-i-1);
-        answer = Integer.parseInt(st,10);
+        dfs(0);
         
         return answer;
+    }
+    
+    private void dfs(int n) {
+    	for(int i = n; i < max; i++) {
+    		if(!check[i]) {
+    			check[i] = true;
+    			dfs(i+1);
+    		}
+    	}
     }
 }
 
