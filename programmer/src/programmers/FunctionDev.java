@@ -25,6 +25,8 @@ class TryDev {
         int[] temp= new int[100];
         
         int size = 0;
+        
+        //	진행도와 속도를 저장하는 리스트 생성
         LinkedList<Integer> list = new LinkedList<>();
         LinkedList<Integer> speed = new LinkedList<>();
         int count = 0;
@@ -41,6 +43,7 @@ class TryDev {
         		cnt++;
         		list.poll();
         		speed.poll();
+        		//	에러방지
         		if(list.isEmpty())
         			break;
         	}

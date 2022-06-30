@@ -18,6 +18,7 @@ class CountPrice {
 		final int size = prices.length;
 		int[] answer = new int[size];
 
+		//	단순 검사
 		for (int i = 0; i < size; i++) {
 			for (int j = i + 1; j < size; j++) {
 				answer[i]++;
