@@ -1,7 +1,6 @@
 package programmers;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 
 /*
  * https://programmers.co.kr/learn/courses/30/lessons/43162?language=java
@@ -26,40 +25,77 @@ import java.util.Queue;
  */
 
 public class TargetNumber {
-	private boolean check[];
 	private int target;
-	int numbers[];
-	int size;
-	int answer = 0;
-	
+	private int answer = 0;
+	private int numbers[];
+
 	public int solution(int[] numbers, int target) {
-        size = numbers.length;
-        this.target = target;
-        this.numbers = numbers;
-        check = new boolean[size];
-        int sum = 0;
-        for(int i : numbers)
-        	sum += i;
-        if(sum == target)
-        	return 1;
-        for(int i = 0; i < size; i++) {
-        	dfs(i,-numbers[i]);
-        	
-        }
-        
-        return answer;
-    }
-	
-	private void dfs(int idx,int value) {
-		check[idx] = true;
-		for(int i = 0 ; i < size; i++) {
-			if(!check[i]) {
-				dfs(i,value-numbers[i]);
-				check[i] = false;
-			}
-			value += numbers[i];
-			if(i == size -1 && value == target)
-				answer ++;
+		int sum = 0;
+		this.target = target;
+		this.numbers = numbers;
+		ArrayList<Integer> arr = new ArrayList<>();
+
+		for (int i : numbers) {
+			sum += i;
+			arr.add(i);
 		}
+
+		if (sum == target)
+			return 1;
+
+		getTarget(arr, sum, 0);
+
+		return answer;
+	}
+
+	// 전체 수의 합에서 numbers[i]*2 만큼 뺴주면서 비교하면 된다.
+	private void getTarget(ArrayList<Integer> num, int sum, int idx) {
+		for (int i = idx; i < num.size(); i++) {
+			int prevSum = sum;
+			ArrayList<Integer> newNum = new ArrayList<>();
+			newNum.addAll(num);
+			prevSum -= newNum.get(i) * 2;
+			// 목표 숫자보다 작다면,
+			// 현재 숫자는 냅두고 다음 숫자를 뺸다
+			if (prevSum < target)
+				continue;
+			// 같다면 정답 + 1
+			else if (prevSum == target)
+				answer++;
+			else {
+				// 목표 숫자보다 크다면,
+				// 해당 숫자를 배열에서 제거하고,
+				// 뺸 값을 기준으로 다시한번 실행한다.
+				newNum.remove(i);
+				getTarget(newNum, prevSum, i);
+			}
+		}
+
+	}
+
+	// 프로그래머스 모법 답안 공부용
+	
+	public int solutions(int[] numbers, int target) {
+		int answer = 0;
+		//	배열 순서 0부터 시작, sum 또한 0
+		answer = dfs(0, 0);
+		return answer;
+	}
+
+	private int dfs( int n, int sum) {
+		if (n == numbers.length) {
+			if (sum == target) {
+				return 1;
+			}
+			return 0;
+		}
+		return dfs( n + 1, sum + numbers[n]) + dfs(n + 1, sum - numbers[n]);
+	}
+	
+
+	public static void main(String[] args) {
+		int[] hi = { 4, 1, 2, 1 };
+
+		System.out.println(new TargetNumber().solution(hi, 4));
 	}
 }
